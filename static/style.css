@@ -196,7 +196,9 @@ body {
 }
 .leaderboard li.placeholder .lb-user { color: var(--white-dim); }
 .leaderboard li.placeholder .lb-points { color: rgba(225,6,0,0.5); }
-/* Neutralize the gold/silver/bronze top-3 accents for placeholder slots. */
+/* Neutralize the gold/silver/bronze top-3 accents for placeholder slots,
+   but KEEP the rank number/medal visible (just dimmed) so viewers see
+   1st/2nd/3rd place holders even before anyone has gifts. */
 .leaderboard li.placeholder:nth-child(1),
 .leaderboard li.placeholder:nth-child(2),
 .leaderboard li.placeholder:nth-child(3) {
@@ -204,9 +206,10 @@ body {
   border: 1px solid rgba(255,255,255,0.08);
   border-left: 3px solid rgba(225,6,0,0.25);
 }
-.leaderboard li.placeholder:nth-child(1)::before,
-.leaderboard li.placeholder:nth-child(2)::before,
-.leaderboard li.placeholder:nth-child(3)::before { content: ""; }
+/* Keep the crown/medal + rank visible on top-3 placeholders (dimmed) */
+.leaderboard li.placeholder:nth-child(1)::before { content: "👑"; opacity: 0.4; }
+.leaderboard li.placeholder:nth-child(2)::before { content: "🥈"; opacity: 0.4; }
+.leaderboard li.placeholder:nth-child(3)::before { content: "🥉"; opacity: 0.4; }
 .leaderboard li.empty {
   justify-content: center; opacity: 0.5; font-style: italic;
   background: none; border: 1px dashed rgba(225,6,0,0.3); border-left: 3px solid transparent;
