@@ -46,7 +46,7 @@ both bound to `0.0.0.0` (all interfaces).
 2. Add a **Browser Source** (or "Web Page" source)
 3. URL: `http://<YOUR_LAN_IP>:8766/`
    - Find your LAN IP: `hostname -I | awk '{print $1}'`
-   - Example: `http://172.27.230.184:8766/`
+   - Example: `http://123.12.123.123:8766/`
    - **Do NOT use `localhost`** — TikTok Live Studio's browser source sandbox
      blocks loopback addresses. Use your LAN IP instead.
    - (Your public/router IP will NOT work from inside your own network —
