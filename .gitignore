@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.venv311/
+*.egg-info/
+leaderboard.log
+.sync_refresh
