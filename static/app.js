@@ -4,12 +4,20 @@
    localhost or a public IP. The page is served on port 8766 (HTTP) and the
    live data WebSocket runs on the SAME port (8766) for same-origin compatibility. */
 
-// Derive ws://host:PORT/ws from the page that loaded us (same origin, same port).
-// TikTok Live Studio's browser sandbox blocks cross-port WebSocket connections,
-// so we connect on the SAME port the page is served from.
-const PAGE_HOST = window.location.hostname;          // e.g. 134.228.215.58 or localhost
-const PAGE_PORT = window.location.port || "80";      // the port the page was served on
-const WS_URL = `ws://${PAGE_HOST}:${PAGE_PORT}/`;
+// WebSocket endpoint resolution:
+//   1. If a <meta name="ws-url"> tag is present, use it (lets a page hosted
+//      on one domain — e.g. Cloudflare Pages — talk to a backend on another).
+//   2. Otherwise derive from the page's own URL (same-origin). Works for
+//      localhost and when the page + WS share a host (single tunnel/ALB).
+// Auto-upgrade to wss:// when the resolved URL's protocol is https.
+const WS_META = document.querySelector('meta[name="ws-url"]');
+let WS_URL;
+if (WS_META && WS_META.content) {
+  // meta may be http(s)://host/ or ws://host/ — normalize to ws:// or wss://
+  const metaUrl = new URL(WS_META.content);
+  const wsProto = (metaUrl.protocol === "https:" || metaUrl.protocol === "wss:") ? "wss" : "ws";
+  WS_URL = `${wsProto}://${metaUrl.host}/`;
+}
 
 let previousScores = {};   // user -> points (to detect changes for bump animation)
 let lastState = null;      // most recent snapshot from the server
