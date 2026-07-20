@@ -181,22 +181,21 @@ function render(data) {
   if (cd.className !== cdClass) cd.className = cdClass;
   if (cd.textContent !== cdText) cd.textContent = cdText;
 
-  // Recent Likers
+  // Recent Likers — cap at 5, single row (CSS nowrap + overflow hidden)
   const rl = document.getElementById("recent-likers");
   if (!data.recent_likers || !data.recent_likers.length) {
     rl.innerHTML = '<span class="empty">No likes yet</span>';
   } else {
-    rl.innerHTML = data.recent_likers
+    rl.innerHTML = data.recent_likers.slice(0, 5)
       .map((u) => `<span class="liker">${escapeHtml(u)}</span>`)
       .join("");
   }
 
   // Leaderboard
-  // Leaderboard — ALWAYS render exactly 10 fixed rows so the panel height
-  // never changes (no more layout jump as viewers join/leave). Real users
-  // fill the top ranks; empty ranks show dimmed placeholder rows.
+  // Leaderboard — ALWAYS render exactly 5 fixed rows for a compact overlay.
+  // Real users fill the top ranks; empty ranks show dimmed placeholder rows.
   const lb = document.getElementById("leaderboard");
-  const MAX_ROWS = 10;
+  const MAX_ROWS = 5;
   const rows = (data.leaderboard || []).slice(0, MAX_ROWS);
   let html = "";
   rows.forEach((row) => {
@@ -206,7 +205,7 @@ function render(data) {
       + `<div class="lb-points">${row.points.toLocaleString()} pts</div>`
       + `</li>`;
   });
-  // Pad with placeholders up to MAX_ROWS so the list is always 10 tall.
+  // Pad with placeholders up to MAX_ROWS so the list is always 5 tall.
   for (let i = rows.length; i < MAX_ROWS; i++) {
     html += `<li class="placeholder">`
       + `<div class="lb-user">—<br><span class="gifts">0 gifts</span></div>`

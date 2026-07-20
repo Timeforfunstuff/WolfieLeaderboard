@@ -138,7 +138,10 @@ body {
 
 .recent-likers-box { margin-top: 8px; font-size: 11px; }
 .rl-label { color: var(--blood-bright); font-weight: bold; letter-spacing: 0.5px; }
-.recent-likers { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.recent-likers {
+  display: flex; flex-wrap: nowrap; gap: 4px; margin-top: 4px;
+  overflow: hidden; white-space: nowrap;
+}
 .recent-likers .liker {
   background: rgba(225,6,0,0.14);
   border: 1px solid rgba(225,6,0,0.4);
@@ -146,6 +149,7 @@ body {
   padding: 2px 8px;
   font-size: 11px;
   color: var(--white);
+  flex: 0 0 auto;          /* don't shrink — keep pills on one line */
 }
 .recent-likers .empty { opacity: 0.5; font-style: italic; }
 
