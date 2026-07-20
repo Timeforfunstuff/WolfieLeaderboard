@@ -87,18 +87,31 @@ body {
 /* Hype Meter */
 .hype { margin: 10px 0 12px; }
 .hype-bar {
-  position: relative;            /* anchor for the overlaid label */
+  position: relative;            /* anchor for the overlaid label + rails */
   height: 26px;                  /* single line: label + multiplier */
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(225,6,0,0.5);
   border-radius: 6px;
   overflow: visible;             /* let indicator spill below */
-  margin: 4px 0 14px;            /* extra bottom space for the spill tag */
+  margin: 4px 0 16px;            /* extra bottom space for the spill tag + rails */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+/* Vertical side rails extending down from the bar's left/right edges,
+   framing the spilled indicator text like a channel locked to the bar. */
+.hype-bar::before,
+.hype-bar::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 1px;
+  height: 16px;                  /* reach down to cradle the text */
+  background: rgba(225,6,0,0.5);
+}
+.hype-bar::before { left: 0; }
+.hype-bar::after  { right: 0; }
 /* Line 1: label + multiplier (compact, no extra row) */
 .hype-label-overlay {
   position: absolute;
@@ -124,14 +137,13 @@ body {
 .hype-countdown {
   position: absolute;
   top: 100%;                    /* sits just below the bar's bottom edge */
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0; right: 0;            /* span the bar width so it stays within the rails */
   margin-top: 2px;
   text-align: center;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.3px;
-  padding: 1px 8px;
+  padding: 1px 10px;            /* keeps text off the rails */
   color: var(--blood-bright);
   text-shadow: 0 1px 3px rgba(0,0,0,0.9);
   pointer-events: none;
