@@ -239,27 +239,41 @@ function render(data) {
 
 
   // Hype Countdown — two-phase:
-  //   Grace (calm): hype > 0, no warning shown, waiting 3s after last activity.
-  //   Countdown (active): 15s ticking down; any like/gift resets to grace.
-  // NOTE: only write className/textContent when they actually change, otherwise
-  // re-assigning the class every render (500ms tick + WS pushes) RESTARTS the
-  // CSS animations and makes the text appear to "flash".
+  //   Grace (calm): hype > 0, no warning shown, waiting after last activity.
+  //   Countdown (active): ticking down from the server's value; we interpolate
+  //   CLIENT-SIDE between server updates so the number ticks smoothly every
+  //   second instead of hanging on the last server value.
   const cd = document.getElementById("hype-countdown");
-  // Server sends the live remaining seconds (hype_countdown); use it directly
-  // so the ticker matches the server's 15s countdown (no client double-count).
   const liveCountdown = (data.hype_countdown_active ? Math.max(0, data.hype_countdown || 0) : 0);
+
+  // Track server-provided countdown + the local time we received it, so we can
+  // decrement locally between server pushes (smooth tick, no "hung" number).
+  if (data.hype_countdown_active && liveCountdown > 0) {
+    if (cd._lastServerVal !== liveCountdown || !cd._lastTs) {
+      cd._lastServerVal = liveCountdown;
+      cd._lastTs = performance.now();
+    }
+  } else {
+    cd._lastServerVal = 0;
+    cd._lastTs = 0;
+  }
+  // Local interpolated seconds (never goes below 0, never exceeds server val)
+  let shown = liveCountdown;
+  if (cd._lastTs) {
+    const elapsed = Math.floor((performance.now() - cd._lastTs) / 1000);
+    shown = Math.max(0, liveCountdown - elapsed);
+  }
+
   let cdClass, cdText;
-  if (data.hype_level > 0 && data.hype_countdown_active && liveCountdown > 0) {
+  if (data.hype_level > 0 && data.hype_countdown_active && shown > 0) {
     cdClass = "hype-countdown warning";
-    cdText = (liveCountdown <= 5)
-      ? `⚠️ HYPE DROPS IN ${liveCountdown}s — KEEP LIKING!`
-      : `⏳ Hype dropping in ${liveCountdown}s...`;
+    cdText = (shown <= 5)
+      ? `⚠️ HYPE DROPS IN ${shown}s — KEEP LIKING!`
+      : `⏳ Hype dropping in ${shown}s...`;
   } else if (data.hype_level > 0) {
-    // Grace period — calm, steady (no flashing).
     cdClass = "hype-countdown";
     cdText = "⚡ Hype high — keep liking or it drops!";
   } else {
-    // Hype at 0 - invite the audience to activate it.
     cdClass = "hype-countdown invite";
     cdText = "GIFTS and TAPS activate the HYPE METER!";
   }
