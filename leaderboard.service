@@ -1,0 +1,17 @@
+[Unit]
+Description=TikTok Live Leaderboard Overlay Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=time
+WorkingDirectory=/mnt/c/Users/timef/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc/LocalState/Projects/TikTok Live Leaderboard
+ExecStart=/bin/bash -c '"/mnt/c/Users/timef/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc/LocalState/Projects/TikTok Live Leaderboard/start_leaderboard.sh" sk_wolfie'
+Restart=always
+RestartSec=5
+StandardOutput=append:/mnt/c/Users/timef/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc/LocalState/Projects/TikTok Live Leaderboard/leaderboard.log
+StandardError=append:/mnt/c/Users/timef/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc/LocalState/Projects/TikTok Live Leaderboard/leaderboard.log
+
+[Install]
+WantedBy=multi-user.target

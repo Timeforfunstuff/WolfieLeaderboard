@@ -173,6 +173,10 @@ body {
 .leaderboard li:nth-child(2)::before { color: #c0c0c0; }
 .leaderboard li:nth-child(3) { border-left-color: #cd7f32; }
 .leaderboard li:nth-child(3)::before { color: #cd7f32; }
+.leaderboard li:nth-child(4) { border-left-color: #d4af37; opacity: 0.8; }
+.leaderboard li:nth-child(4)::before { color: #d4af37; opacity: 0.7; }
+.leaderboard li:nth-child(5) { border-left-color: #d4af37; opacity: 0.6; }
+.leaderboard li:nth-child(5)::before { color: #d4af37; opacity: 0.5; }
 
 .leaderboard li::before {
   content: counter(rank);
