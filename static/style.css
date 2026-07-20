@@ -154,43 +154,78 @@ body {
 .recent-likers .empty { opacity: 0.5; font-style: italic; }
 
 /* Leaderboard */
-.leaderboard { list-style: none; counter-reset: rank; }
+.leaderboard {
+  list-style: none;
+  counter-reset: rank;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: flex-end;        /* podium bases align; 1st lifted via translateY */
+}
 .leaderboard li {
   counter-increment: rank;
   display: flex; align-items: center;
-  padding: 7px 10px; margin: 5px 0;
+  padding: 7px 10px; margin: 0;
   background: rgba(255,255,255,0.05);
   border-left: 3px solid var(--blood);
   border-radius: 8px;
   font-size: 14px;
   transition: all 0.3s ease;
 }
-/* gold "alpha" top-3 accents */
-.leaderboard li:nth-child(1) {
-  background: linear-gradient(90deg, rgba(212,175,55,0.28), rgba(255,255,255,0.04));
-  border-left-color: var(--gold);
-  border: 1px solid var(--gold);
-  border-left: 3px solid var(--gold);
-}
-.leaderboard li:nth-child(1)::before { color: var(--gold); content: "👑"; }
-.leaderboard li:nth-child(2) { border-left-color: #c0c0c0; }
-.leaderboard li:nth-child(2)::before { color: #c0c0c0; }
-.leaderboard li:nth-child(3) { border-left-color: #cd7f32; }
-.leaderboard li:nth-child(3)::before { color: #cd7f32; }
-.leaderboard li:nth-child(4) { border-left-color: #d4af37; opacity: 0.8; }
-.leaderboard li:nth-child(4)::before { color: #d4af37; opacity: 0.7; }
-.leaderboard li:nth-child(5) { border-left-color: #d4af37; opacity: 0.6; }
-.leaderboard li:nth-child(5)::before { color: #d4af37; opacity: 0.5; }
 
+/* ===== PODIUM: top 3 arranged 2nd-left, 1st-center(lifted), 3rd-right ===== */
+.leaderboard li:nth-child(1),
+.leaderboard li:nth-child(2),
+.leaderboard li:nth-child(3) {
+  flex: 1 1 30%;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 6px 8px;
+  gap: 2px;
+  border-left: none;
+  border-top: 3px solid var(--blood);
+}
+.leaderboard li:nth-child(1) {      /* 1st — center, lifted */
+  order: 2;
+  transform: translateY(-16px);
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(212,175,55,0.30), rgba(255,255,255,0.04));
+  box-shadow: 0 0 14px rgba(212,175,55,0.35);
+}
+.leaderboard li:nth-child(2) { order: 1; }   /* 2nd — left */
+.leaderboard li:nth-child(3) { order: 3; }   /* 3rd — right */
+
+/* ===== 4th & 5th: normal horizontal rows below the podium ===== */
+.leaderboard li:nth-child(4),
+.leaderboard li:nth-child(5) {
+  order: 4;
+  flex: 1 1 100%;
+}
+.leaderboard li:nth-child(4) { border-left-color: #d4af37; opacity: 0.85; }
+.leaderboard li:nth-child(4)::before { color: #d4af37; opacity: 0.8; }
+.leaderboard li:nth-child(5) { border-left-color: #d4af37; opacity: 0.65; }
+.leaderboard li:nth-child(5)::before { color: #d4af37; opacity: 0.6; }
+
+/* rank number prefix for the horizontal (4th/5th) rows */
 .leaderboard li::before {
   content: counter(rank);
   font-weight: bold; font-size: 16px;
   width: 28px; text-align: center;
   color: var(--blood-bright);
 }
+/* podium cards (top 3) show a medal instead of the rank number */
+.leaderboard li:nth-child(1)::before { content: "👑"; color: var(--gold); font-size: 22px; width: auto; margin-bottom: 2px; }
+.leaderboard li:nth-child(2)::before { content: "🥈"; color: #c0c0c0; font-size: 20px; width: auto; margin-bottom: 2px; }
+.leaderboard li:nth-child(3)::before { content: "🥉"; color: #cd7f32; font-size: 20px; width: auto; margin-bottom: 2px; }
+
 .lb-user { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 8px; }
 .lb-user .gifts { font-size: 10px; opacity: 0.6; color: var(--white-dim); }
 .lb-points { font-weight: bold; color: var(--blood-bright); font-variant-numeric: tabular-nums; text-shadow: 0 0 8px rgba(225,6,0,0.4); }
+
+/* podium cards: stack name + points, centered, narrow */
+.leaderboard li:nth-child(-n+3) .lb-user { flex: 0; padding: 0; text-align: center; font-size: 13px; max-width: 100%; }
+.leaderboard li:nth-child(-n+3) .lb-points { font-size: 13px; }
 
 /* Placeholder rows keep the panel a CONSTANT height: always 10 rows are
    rendered (real users first, then dimmed placeholders) so the overlay never
@@ -204,20 +239,19 @@ body {
 }
 .leaderboard li.placeholder .lb-user { color: var(--white-dim); }
 .leaderboard li.placeholder .lb-points { color: rgba(225,6,0,0.5); }
-/* Neutralize the gold/silver/bronze top-3 accents for placeholder slots,
-   but KEEP the rank number/medal visible (just dimmed) so viewers see
-   1st/2nd/3rd place holders even before anyone has gifts. */
+/* Top-3 placeholders keep the PODIUM shape (lifted 1st, column layout) but
+   dimmed + neutral border so empty slots still read as a podium. */
 .leaderboard li.placeholder:nth-child(1),
 .leaderboard li.placeholder:nth-child(2),
 .leaderboard li.placeholder:nth-child(3) {
   background: rgba(255,255,255,0.025);
   border: 1px solid rgba(255,255,255,0.08);
-  border-left: 3px solid rgba(225,6,0,0.25);
+  border-top: 3px solid rgba(225,6,0,0.25);
 }
-/* Keep the crown/medal + rank visible on top-3 placeholders (dimmed) */
-.leaderboard li.placeholder:nth-child(1)::before { content: "👑"; opacity: 0.4; }
-.leaderboard li.placeholder:nth-child(2)::before { content: "🥈"; opacity: 0.4; }
-.leaderboard li.placeholder:nth-child(3)::before { content: "🥉"; opacity: 0.4; }
+/* Keep medals visible on top-3 placeholders (dimmed) */
+.leaderboard li.placeholder:nth-child(1)::before { content: "👑"; color: var(--gold); opacity: 0.35; font-size: 22px; width: auto; margin-bottom: 2px; }
+.leaderboard li.placeholder:nth-child(2)::before { content: "🥈"; color: #c0c0c0; opacity: 0.35; font-size: 20px; width: auto; margin-bottom: 2px; }
+.leaderboard li.placeholder:nth-child(3)::before { content: "🥉"; color: #cd7f32; opacity: 0.35; font-size: 20px; width: auto; margin-bottom: 2px; }
 .leaderboard li.empty {
   justify-content: center; opacity: 0.5; font-style: italic;
   background: none; border: 1px dashed rgba(225,6,0,0.3); border-left: 3px solid transparent;
