@@ -133,7 +133,7 @@ body {
   animation: rainbow-flow 2.5s linear infinite;
 }
 @keyframes rainbow-flow { 0%{background-position:0% 0} 100%{background-position:200% 0} }
-/* Like / Follow counts — prominent chips under the bar */
+/* Like / Follow counts — plain bold text, no borders, same size */
 .hype-counts { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; }
 .hype-counts .count {
   flex: 1;
@@ -141,15 +141,18 @@ body {
   font-weight: 800;
   font-size: 15px;
   letter-spacing: 0.5px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(225,6,0,0.4);
-  background: rgba(225,6,0,0.12);
+  padding: 2px 8px;
   color: var(--white);
-  text-shadow: 0 0 6px rgba(225,6,0,0.4);
 }
-.hype-counts .count.likes { color: var(--blood-bright); border-color: var(--blood); }
-.hype-counts .count.follows { color: var(--gold); border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.12); }
+.hype-counts .count.likes { color: var(--blood-bright); }
+.hype-counts .count.follows { color: var(--gold); }
+/* Flash white + pulse-grow on count change, then settle back */
+.count.flash { animation: count-flash 0.55s ease; }
+@keyframes count-flash {
+  0%   { color: #ffffff; transform: scale(1.18); text-shadow: 0 0 14px #ffffff; }
+  55%  { color: #ffffff; }
+  100% { transform: scale(1); text-shadow: 0 0 6px rgba(225,6,0,0.35); }
+}
 /* Overdrive bar — appears ABOVE a full main bar when hype exceeds x3.0.
    Fills from x3.0 (20 steps) to x5.0 (40 steps), then stays full. */
 .hype-overdrive-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; opacity: 0; transition: opacity 0.4s ease; }

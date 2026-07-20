@@ -159,8 +159,24 @@ function render(data) {
     const followCount = (typeof data.follow_count === "number") ? data.follow_count : 0;
     const ltEl = document.getElementById("like-total");
     const fcEl = document.getElementById("follow-count");
-    if (ltEl) ltEl.textContent = likeTotal.toLocaleString() + " likes";
-    if (fcEl) fcEl.textContent = followCount + " follows";
+    const ltTxt = likeTotal.toLocaleString() + " likes";
+    const fcTxt = followCount + " follows";
+    if (ltEl) {
+      if (ltEl.textContent !== ltTxt) {          // only flash on real change
+        ltEl.textContent = ltTxt;
+        ltEl.classList.remove("flash");
+        void ltEl.offsetWidth;                    // restart animation
+        ltEl.classList.add("flash");
+      }
+    }
+    if (fcEl) {
+      if (fcEl.textContent !== fcTxt) {
+        fcEl.textContent = fcTxt;
+        fcEl.classList.remove("flash");
+        void fcEl.offsetWidth;
+        fcEl.classList.add("flash");
+      }
+    }
   } catch (e) {
     console.error("[render] like-total update failed:", e);
   }
