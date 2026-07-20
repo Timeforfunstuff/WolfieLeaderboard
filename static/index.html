@@ -34,22 +34,24 @@
           <div id="hype-overdrive" class="hype-overdrive"></div>
         </div>
       </div>
-      <div class="hype-counts">
-        <span id="like-total" class="count likes">0 likes</span>
-        <span id="follow-count" class="count follows">0 follows</span>
-      </div>
+    </div>
+
+    <!-- Single header row: likes | Recent Likers | Top Gifters | follows -->
+    <div class="board-header-row">
+      <span id="like-total" class="count likes">0 likes</span>
+      <span class="col-title static">🐾 Recent Likers</span>
+      <span class="col-title static">🎁 Top Gifters</span>
+      <span id="follow-count" class="count follows">0 follows</span>
     </div>
 
     <!-- Two-column dashboard: likers (left) + gifters (right) -->
     <div class="columns">
       <div class="col col-likers">
-        <h2 class="col-title">🐾 Recent Likers</h2>
         <ol id="likers-list" class="likers-list">
           <li class="empty">No likes yet</li>
         </ol>
       </div>
       <div class="col col-gifters">
-        <h2 class="col-title">🎁 Top Gifters</h2>
         <ol id="leaderboard" class="leaderboard">
           <li class="empty">Waiting for gifts...</li>
         </ol>

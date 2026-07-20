@@ -61,6 +61,33 @@ body {
   border-bottom: 1px solid rgba(225,6,0,0.3);
   text-align: center;
 }
+/* In the top header row, titles are inline (no underline/border, no bottom gap) */
+.col-title.static {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+/* Single header row: likes | Recent Likers | Top Gifters | follows.
+   Margin top/bottom gives breathing room so the hype meter / columns don't clip. */
+.board-header-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 12px;
+  padding: 4px 2px;
+}
+.board-header-row .count {
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.board-header-row .count.likes { color: var(--blood-bright); }
+.board-header-row .count.follows { color: var(--gold); }
+.board-header-row .col-title.static {
+  font-size: 12px;
+}
 
 .board-header { text-align: center; margin-bottom: 12px; }
 .board-header h1 {
@@ -131,7 +158,7 @@ body {
   left: 12.5%; right: 12.5%;    /* align box edges with the rails */
   margin-top: 0;                /* flush against the bar bottom — no gap */
   text-align: center;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.3px;
   padding: 3px 6px;
