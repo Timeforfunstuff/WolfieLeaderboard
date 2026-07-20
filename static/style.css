@@ -24,7 +24,7 @@ body {
 
 /* faint diagonal "fur" texture over the black panel */
 .board {
-  width: 420px;
+  width: 760px;
   margin: 0 auto;
   background:
     repeating-linear-gradient(
@@ -39,6 +39,27 @@ body {
   border-radius: 14px;
   padding: 16px 18px;
   box-shadow: 0 0 28px rgba(225,6,0,0.45), inset 0 0 18px rgba(0,0,0,0.6);
+}
+
+/* Two-column dashboard: likers (left) + gifters (right) */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 4px;
+}
+.col { min-width: 0; }
+.col-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--blood-bright);
+  text-shadow: 0 0 8px rgba(225,6,0,0.4);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(225,6,0,0.3);
+  text-align: center;
 }
 
 .board-header { text-align: center; margin-bottom: 12px; }
@@ -136,22 +157,37 @@ body {
 }
 @keyframes hype-invite { 0%,100%{opacity:1; transform: scale(1)} 50%{opacity:0.7; transform: scale(1.03)} }
 
-.recent-likers-box { margin-top: 8px; font-size: 11px; }
-.rl-label { color: var(--blood-bright); font-weight: bold; letter-spacing: 0.5px; }
-.recent-likers {
-  display: flex; flex-wrap: nowrap; gap: 4px; margin-top: 4px;
-  overflow: hidden; white-space: nowrap;
+/* Recent Likers (left column) — vertical ranked list, capped at 5 */
+.likers-list {
+  list-style: none;
+  counter-reset: liker;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-.recent-likers .liker {
-  background: rgba(225,6,0,0.14);
-  border: 1px solid rgba(225,6,0,0.4);
-  border-radius: 10px;
-  padding: 2px 8px;
-  font-size: 11px;
-  color: var(--white);
-  flex: 0 0 auto;          /* don't shrink — keep pills on one line */
+.likers-list li {
+  counter-increment: liker;
+  display: flex;
+  align-items: center;
+  padding: 7px 10px;
+  background: rgba(225,6,0,0.08);
+  border-left: 3px solid var(--blood);
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.recent-likers .empty { opacity: 0.5; font-style: italic; }
+.likers-list li::before {
+  content: counter(liker);
+  font-weight: bold;
+  font-size: 15px;
+  width: 24px;
+  text-align: center;
+  color: var(--blood-bright);
+  flex: 0 0 auto;
+}
+.likers-list li.empty { justify-content: center; opacity: 0.5; font-style: italic; border-left-color: transparent; background: none; }
 
 /* Leaderboard */
 .leaderboard {

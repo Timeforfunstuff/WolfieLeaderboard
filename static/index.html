@@ -21,7 +21,7 @@
       </div>
     </header>
 
-    <!-- Hype Meter -->
+    <!-- Hype Meter (spans the top of both columns) -->
     <div class="hype">
       <div class="hype-label">
         <span>🦴 HYPE METER</span>
@@ -41,16 +41,23 @@
         <span id="follow-count">0 follows</span>
       </div>
       <div id="hype-countdown" class="hype-countdown hidden"></div>
-      <div class="recent-likers-box">
-        <span class="rl-label">🐾 Recent Likers:</span>
-        <div id="recent-likers" class="recent-likers"><span class="empty">No likes yet</span></div>
-      </div>
     </div>
 
-    <!-- Top 10 -->
-    <ol id="leaderboard" class="leaderboard">
-      <li class="empty">Waiting for live engagement...</li>
-    </ol>
+    <!-- Two-column dashboard: likers (left) + gifters (right) -->
+    <div class="columns">
+      <div class="col col-likers">
+        <h2 class="col-title">🐾 Recent Likers</h2>
+        <ol id="likers-list" class="likers-list">
+          <li class="empty">No likes yet</li>
+        </ol>
+      </div>
+      <div class="col col-gifters">
+        <h2 class="col-title">🎁 Top Gifters</h2>
+        <ol id="leaderboard" class="leaderboard">
+          <li class="empty">Waiting for gifts...</li>
+        </ol>
+      </div>
+    </div>
 
     <footer class="board-footer">
       <span>Made by Timeforfunstuff</span>
@@ -246,13 +253,13 @@ function render(data) {
   if (cd.className !== cdClass) cd.className = cdClass;
   if (cd.textContent !== cdText) cd.textContent = cdText;
 
-  // Recent Likers — cap at 5, single row (CSS nowrap + overflow hidden)
-  const rl = document.getElementById("recent-likers");
+  // Recent Likers (left column) — vertical list, capped at 5
+  const rl = document.getElementById("likers-list");
   if (!data.recent_likers || !data.recent_likers.length) {
-    rl.innerHTML = '<span class="empty">No likes yet</span>';
+    rl.innerHTML = '<li class="empty">No likes yet</li>';
   } else {
     rl.innerHTML = data.recent_likers.slice(0, 5)
-      .map((u) => `<span class="liker">${escapeHtml(u)}</span>`)
+      .map((u) => `<li class="liker-row">${escapeHtml(u)}</li>`)
       .join("");
   }
 
