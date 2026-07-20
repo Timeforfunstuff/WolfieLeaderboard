@@ -91,7 +91,7 @@ body {
   height: 26px;                  /* single line: label + multiplier */
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(225,6,0,0.5);
-  border-radius: 6px;
+  border-radius: 6px 6px 0 0;   /* square bottom so the channel meets flush */
   overflow: visible;             /* let indicator spill below */
   margin: 4px 0 16px;            /* extra bottom space for the spill tag + rails */
   display: flex;
@@ -139,7 +139,7 @@ body {
   position: absolute;
   top: 100%;                    /* sits just below the bar's bottom edge */
   left: 12.5%; right: 12.5%;    /* align text edges with the rails */
-  margin-top: 2px;
+  margin-top: 0;                /* flush against the bar bottom — no gap */
   text-align: center;
   font-size: 10px;
   font-weight: 700;
