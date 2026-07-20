@@ -152,7 +152,8 @@ body {
 .hype-countdown.hidden { display: none; }
 @keyframes hype-warn { 0%,100%{opacity:1} 50%{opacity:0.5} }
 .hype-fill {
-  position: relative;
+  position: absolute;            /* anchor to left edge, grow rightward */
+  left: 0; top: 0; bottom: 0;
   z-index: 0;
   height: 100%; width: 0%;
   background: linear-gradient(90deg, var(--blood-deep), var(--blood-bright));
