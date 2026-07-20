@@ -110,8 +110,8 @@ body {
   height: 16px;                  /* reach down to cradle the text */
   background: rgba(225,6,0,0.5);
 }
-.hype-bar::before { left: 0; }
-.hype-bar::after  { right: 0; }
+.hype-bar::before { left: 12.5%; }    /* ~25% narrower than full bar */
+.hype-bar::after  { right: 12.5%; }
 /* Line 1: label + multiplier (compact, no extra row) */
 .hype-label-overlay {
   position: absolute;
