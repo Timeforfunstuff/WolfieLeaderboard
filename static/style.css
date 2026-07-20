@@ -133,17 +133,18 @@ body {
   font-size: 14px;
   text-shadow: 0 0 8px rgba(212,175,55,0.7);
 }
-/* Line 2: indicator text — looks like it spills out of the bottom of the bar */
+/* Line 2: indicator text — spills out of the bottom of the bar, confined
+   to the SAME 12.5%–87.5% span as the side rails so its edges match them. */
 .hype-countdown {
   position: absolute;
   top: 100%;                    /* sits just below the bar's bottom edge */
-  left: 0; right: 0;            /* span the bar width so it stays within the rails */
+  left: 12.5%; right: 12.5%;    /* align text edges with the rails */
   margin-top: 2px;
   text-align: center;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.3px;
-  padding: 1px 10px;            /* keeps text off the rails */
+  padding: 1px 6px;             /* small inset from the rails */
   color: var(--blood-bright);
   text-shadow: 0 1px 3px rgba(0,0,0,0.9);
   pointer-events: none;
