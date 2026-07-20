@@ -23,12 +23,9 @@
 
     <!-- Hype Meter (spans the top of both columns) -->
     <div class="hype">
-      <div class="hype-label">
-        <span>🦴 HYPE METER</span>
-        <span id="hype-mult">x1.0</span>
-      </div>
       <div class="hype-bar">
         <div id="hype-fill" class="hype-fill"></div>
+        <span class="hype-label-overlay">🦴 HYPE METER <span id="hype-mult">x1.0</span></span>
       </div>
       <div class="hype-overdrive-row">
         <span class="od-label">⚡ OVERDRIVE</span>
@@ -36,9 +33,9 @@
           <div id="hype-overdrive" class="hype-overdrive"></div>
         </div>
       </div>
-      <div class="hype-stats">
-        <span id="like-total">0 likes</span>
-        <span id="follow-count">0 follows</span>
+      <div class="hype-counts">
+        <span id="like-total" class="count likes">0 likes</span>
+        <span id="follow-count" class="count follows">0 follows</span>
       </div>
       <div id="hype-countdown" class="hype-countdown hidden"></div>
     </div>

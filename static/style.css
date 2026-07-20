@@ -85,18 +85,40 @@ body {
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 
 /* Hype Meter */
-.hype { margin: 10px 0 14px; }
-.hype-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; color: var(--white); letter-spacing: 1px; }
-.hype-label span:first-child::before { content: "🦴 "; }
+.hype { margin: 10px 0 12px; }
 .hype-bar {
-  height: 10px;
+  position: relative;            /* anchor for the overlaid label */
+  height: 22px;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(225,6,0,0.5);
   border-radius: 6px;
   overflow: hidden;
   margin: 4px 0;
 }
+/* Label + multiplier sit ON TOP of the bar (compact, no extra row) */
+.hype-label-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--white);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  pointer-events: none;
+  z-index: 1;
+}
+.hype-label-overlay #hype-mult {
+  color: var(--gold);
+  font-size: 14px;
+  text-shadow: 0 0 8px rgba(212,175,55,0.7);
+}
 .hype-fill {
+  position: relative;
+  z-index: 0;
   height: 100%; width: 0%;
   background: linear-gradient(90deg, var(--blood-deep), var(--blood-bright));
   box-shadow: 0 0 10px var(--blood-bright);
@@ -111,7 +133,23 @@ body {
   animation: rainbow-flow 2.5s linear infinite;
 }
 @keyframes rainbow-flow { 0%{background-position:0% 0} 100%{background-position:200% 0} }
-.hype-stats { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.75; color: var(--white-dim); }
+/* Like / Follow counts — prominent chips under the bar */
+.hype-counts { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; }
+.hype-counts .count {
+  flex: 1;
+  text-align: center;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(225,6,0,0.4);
+  background: rgba(225,6,0,0.12);
+  color: var(--white);
+  text-shadow: 0 0 6px rgba(225,6,0,0.4);
+}
+.hype-counts .count.likes { color: var(--blood-bright); border-color: var(--blood); }
+.hype-counts .count.follows { color: var(--gold); border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.12); }
 /* Overdrive bar — appears ABOVE a full main bar when hype exceeds x3.0.
    Fills from x3.0 (20 steps) to x5.0 (40 steps), then stays full. */
 .hype-overdrive-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; opacity: 0; transition: opacity 0.4s ease; }
