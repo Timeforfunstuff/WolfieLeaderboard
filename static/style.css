@@ -88,12 +88,12 @@ body {
 .hype { margin: 10px 0 12px; }
 .hype-bar {
   position: relative;            /* anchor for the overlaid label */
-  height: 40px;                  /* two lines: label + indicator */
+  height: 26px;                  /* single line: label + multiplier */
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(225,6,0,0.5);
   border-radius: 6px;
-  overflow: hidden;
-  margin: 4px 0;
+  overflow: visible;             /* let indicator spill below */
+  margin: 4px 0 14px;            /* extra bottom space for the spill tag */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,10 +120,13 @@ body {
   font-size: 14px;
   text-shadow: 0 0 8px rgba(212,175,55,0.7);
 }
-/* Line 2: indicator text (centered, second line of the bar) */
+/* Line 2: indicator text — looks like it spills out of the bottom of the bar */
 .hype-countdown {
   position: absolute;
-  bottom: 3px; left: 0; right: 0;
+  top: 100%;                    /* sits just below the bar's bottom edge */
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 2px;
   text-align: center;
   font-size: 10px;
   font-weight: 700;
