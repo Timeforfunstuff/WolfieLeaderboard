@@ -85,11 +85,10 @@ body {
 }
 .board-header-row .count.likes { color: var(--blood-bright); }
 .board-header-row .count.follows { color: var(--gold); }
-.board-header-row .col-title.static {
-  font-size: 12px;
-  color: var(--gold);
-  text-shadow: 0 0 8px rgba(212,175,55,0.4);
-}
+/* Only the Gifters title is gold (matches follows); Likers title stays red */
+.board-header-row .col-title.static { font-size: 12px; }
+.board-header-row .col-title.static.gifters { color: var(--gold); text-shadow: 0 0 8px rgba(212,175,55,0.4); }
+.board-header-row .col-title.static.likers { color: var(--blood-bright); text-shadow: 0 0 8px rgba(225,6,0,0.4); }
 
 .board-header { text-align: center; margin-bottom: 12px; }
 .board-header h1 {
@@ -177,7 +176,7 @@ body {
   border-radius: 0 0 6px 6px;   /* square where it meets bar, round at bottom */
 }
 .hype-countdown.warning { color: #ff6a5e; animation: hype-warn 0.8s infinite; }
-.hype-countdown.invite { color: var(--gold); }
+.hype-countdown.invite { color: var(--gold); animation: hype-invite 1.5s infinite; }
 .hype-countdown.hidden { display: none; }
 @keyframes hype-warn { 0%,100%{opacity:1} 50%{opacity:0.5} }
 .hype-fill {
@@ -252,7 +251,9 @@ body {
   background: rgba(225,6,0,0.08);
   border-left: 3px solid var(--blood);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
